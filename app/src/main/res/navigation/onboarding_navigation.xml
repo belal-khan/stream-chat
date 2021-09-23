@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="io.getstream.streamchat.ui.onboarding.SplashFragment"
+        android:label="SplashFragment" />
+    <fragment
+        android:id="@+id/enterPhoneFragment"
+        android:name="io.getstream.streamchat.ui.onboarding.EnterPhoneFragment"
+        android:label="EnterPhoneFragment" />
+    <fragment
+        android:id="@+id/verifyPhoneFragment"
+        android:name="io.getstream.streamchat.ui.onboarding.VerifyPhoneFragment"
+        android:label="VerifyPhoneFragment" />
+    <fragment
+        android:id="@+id/setupProfileFragment"
+        android:name="io.getstream.streamchat.ui.onboarding.SetupProfileFragment"
+        android:label="SetupProfileFragment" />
+</navigation>

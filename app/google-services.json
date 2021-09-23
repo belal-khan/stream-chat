@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "908539624576",
+    "project_id": "stream-chat-578f9",
+    "storage_bucket": "stream-chat-578f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908539624576:android:e9cab02c645dd89bc1fa65",
+        "android_client_info": {
+          "package_name": "io.getstream.streamchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908539624576-79q3s79tvpbmr6m17esak604pqel6897.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiHwYZdBUrtLK3G3t5DaKCtE_xhid-nWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908539624576-79q3s79tvpbmr6m17esak604pqel6897.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
