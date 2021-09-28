@@ -11,12 +11,4 @@ class OnboardingViewModel @Inject constructor(
   private val repo: StreamChatRepository
 ) : ViewModel() {
 
-  suspend fun getUserToken(userId: String): String? {
-    val result = repo.getUserToken(userId)
-    return if (result is Resource.Success) {
-      result.value.token
-    } else {
-      null
-    }
-  }
 }

@@ -1,27 +1,30 @@
 package io.getstream.streamchat.ui.onboarding
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.models.User
-import io.getstream.chat.android.client.token.TokenProvider
+import io.getstream.streamchat.ui.chat.ChatActivity
 import io.getstream.streamchat.R
 import io.getstream.streamchat.data.UserExtra
 import io.getstream.streamchat.databinding.FragmentSetupProfileBinding
 import io.getstream.streamchat.ui.base.BaseFragment
 import io.getstream.streamchat.ui.setViewEnabled
 import io.getstream.streamchat.ui.snackbar
-import kotlinx.coroutines.runBlocking
+import io.getstream.streamchat.ui.startNewActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SetupProfileFragment : BaseFragment(R.layout.fragment_setup_profile) {
 
   private lateinit var binding: FragmentSetupProfileBinding
   private val viewModel by viewModels<OnboardingViewModel>()
+
+  @Inject
+  lateinit var streamTokenProvider: StreamTokenProvider
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -40,29 +43,21 @@ class SetupProfileFragment : BaseFragment(R.layout.fragment_setup_profile) {
 
   private fun setupUser() {
     val user = User(
-      id = currentUser.phoneNumber!!,
+      id = currentUser.uid,
       extraData = mutableMapOf(
         UserExtra.NAME to binding.editTextName.text.toString(),
+        UserExtra.PHONE to currentUser.phoneNumber.toString(),
         UserExtra.IMAGE to UserExtra.DEFAULT_AVATAR,
       )
     )
-    ChatClient.instance().connectUser(user, TokenProviderImpl(currentUser.phoneNumber!!)).enqueue {
-      if (it.isSuccess) {
-        snackbar("User Connected")
-      } else {
-        snackbar("${it.error().message}")
-        Log.e("Error1", it.error().message.toString())
-        Log.e("Error2", it.error().cause?.message.toString())
+    ChatClient.instance().connectUser(user, streamTokenProvider.getTokenProvider(currentUser.uid))
+      .enqueue {
+        if (it.isSuccess) {
+          requireActivity().startNewActivity(ChatActivity::class.java)
+        } else {
+          snackbar("${it.error().message}")
+        }
       }
-    }
-  }
-
-  inner class TokenProviderImpl(
-    private val userId: String
-  ) : TokenProvider {
-    override fun loadToken(): String = runBlocking {
-      viewModel.getUserToken(userId) ?: ""
-    }
   }
 }
 
